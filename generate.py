@@ -8,8 +8,8 @@ import numpy as np
 
 
 SHARE_CODE = ''
-WIDTH = 761
-HEIGHT = 571
+WIDTH = 361
+HEIGHT = 271
 CENTER_X = WIDTH / 2
 CENTER_Y = HEIGHT / 2
 
@@ -93,6 +93,7 @@ class Crosshair:
 
     def get_crosshair_settings(self) -> str:
         settings = str(
+                f'**SETTINGS**\n'
                 f'cl_crosshairstyle {self.style};\n'
                 f'cl_crosshairsize {self.size};\n'
                 f'cl_crosshairthickness {self.thickness};\n'
@@ -198,14 +199,14 @@ def create_image() -> object:
     OUTLINE = 1 if c.has_outline else 0
 
 
-    print(f' resolution: ({WIDTH}, {HEIGHT})')
+    # print(f' resolution: ({WIDTH}, {HEIGHT})')
     def left() -> tuple:
         X1 = CENTER_X - (SIZE + (GAP / 2))
         Y1 = CENTER_Y + (THICKNESS / 2)
         X2 = CENTER_X - (GAP / 2)
         Y2 = CENTER_Y - (THICKNESS / 2)
         left = tuple([X1, Y1, X2, Y2])
-        print(f' left: {left}')
+        # print(f' left: {left}')
         return left
 
 
@@ -215,7 +216,7 @@ def create_image() -> object:
         X2 = CENTER_X + (THICKNESS / 2)
         Y2 = CENTER_Y - (GAP / 2)
         top = tuple([X1, Y1, X2, Y2])
-        print(f' top: {top}')
+        # print(f' top: {top}')
         return top
 
 
@@ -225,17 +226,17 @@ def create_image() -> object:
         X2 = CENTER_X + (SIZE + (GAP / 2))
         Y2 = CENTER_Y - (THICKNESS / 2)
         right = tuple([X1, Y1, X2, Y2])
-        print(f' right: {right}')
+        # print(f' right: {right}')
         return right
 
 
     def bottom() -> tuple:
         X1 = CENTER_X - (THICKNESS / 2)
-        Y1 = CENTER_Y + (GAP / 2)
+        Y1 = CENTER_Y + (GAP / 2) + 1
         X2 = CENTER_X + (THICKNESS / 2)
         Y2 = CENTER_Y + (SIZE + (GAP / 2))
         bottom = tuple([X1, Y1, X2, Y2])
-        print(f' bottom: {bottom}')
+        # print(f' bottom: {bottom}')
         return bottom
 
 
@@ -245,7 +246,7 @@ def create_image() -> object:
         X2 = CENTER_X + (THICKNESS / 2)
         Y2 = CENTER_Y + (THICKNESS / 2)
         dot = tuple([X1, Y1, X2, Y2])
-        print(f' dot: {dot}')
+        # print(f' dot: {dot}')
         return dot
 
 
