@@ -15,12 +15,12 @@ class MyClient(discord.Client):
 
 intents = discord.Intents.default()
 intents.message_content = True
-client = MyClient(intents=intents)
+bot = MyClient(intents=intents)
 
 
-@client.event
+@bot.event
 async def on_message(message):
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
     if message.content.startswith('CSGO'):
@@ -33,7 +33,7 @@ async def on_message(message):
         await message.channel.send(c.get_crosshair_settings())
 
 
-client.run(TOKEN)
+bot.run(TOKEN)
 
 def main():
     pass

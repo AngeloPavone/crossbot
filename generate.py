@@ -1,4 +1,4 @@
-from math import log
+from math import ceil, log
 from os import walk
 import re
 from sys import argv
