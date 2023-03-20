@@ -165,7 +165,7 @@ def create_image(c) -> object:
 
 
     SIZE = 2 * c.size
-    THICKNESS = 2 * c.thickness
+    THICKNESS = round(2 * c.thickness) // 2
     GAP = 2 * map_gap_value(c.gap)
     GAP = round_up_to_odd(GAP)
     SIZE = round_up_to_odd(SIZE)
