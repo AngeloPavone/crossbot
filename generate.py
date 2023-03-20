@@ -1,4 +1,4 @@
-from math import ceil, log
+from math import ceil, log, floor
 from os import walk
 import re
 from sys import argv
@@ -164,18 +164,20 @@ def create_image(c) -> object:
         c.thickness = 1
 
 
-    SIZE = 3 * c.size
-    THICKNESS = 1 * c.thickness
-    GAP = 3 * map_gap_value(c.gap)
+    SIZE = 2 * c.size
+    THICKNESS = 2 * c.thickness
+    GAP = 2 * map_gap_value(c.gap)
     GAP = round_up_to_odd(GAP)
+    SIZE = round_up_to_odd(SIZE)
+    THICKNESS = floor(round_up_to_odd(THICKNESS))
     OUTLINE = 1 if c.has_outline else 0
 
 
     print(f' resolution: ({WIDTH}, {HEIGHT})')
     def left() -> tuple:
-        X1 = CENTER_X - (SIZE + (GAP / 2))
+        X1 = ceil(CENTER_X - (SIZE + (GAP / 2)))
         Y1 = CENTER_Y + (THICKNESS / 2)
-        X2 = CENTER_X - (GAP / 2)
+        X2 = ceil(CENTER_X - (GAP / 2))
         Y2 = CENTER_Y - (THICKNESS / 2)
         left = tuple([X1, Y1, X2, Y2])
         print(f' left: {left}')
@@ -184,18 +186,18 @@ def create_image(c) -> object:
 
     def top() -> tuple:
         X1 = CENTER_X - (THICKNESS / 2)
-        Y1 = CENTER_Y - (SIZE + (GAP / 2))
+        Y1 = ceil(CENTER_Y - (SIZE + (GAP / 2)))
         X2 = CENTER_X + (THICKNESS / 2)
-        Y2 = CENTER_Y - (GAP / 2)
+        Y2 = ceil(CENTER_Y - (GAP / 2))
         top = tuple([X1, Y1, X2, Y2])
         print(f' top: {top}')
         return top
 
 
     def right() -> tuple:
-        X1 = CENTER_X + (GAP / 2)
+        X1 = floor(CENTER_X + (GAP / 2))
         Y1 = CENTER_Y + (THICKNESS / 2)
-        X2 = ceil(CENTER_X + (SIZE + (GAP / 2)))
+        X2 = floor(CENTER_X + (SIZE + (GAP / 2)))
         Y2 = CENTER_Y - (THICKNESS / 2)
         right = tuple([X1, Y1, X2, Y2])
         print(f' right: {right}')
@@ -204,9 +206,9 @@ def create_image(c) -> object:
 
     def bottom() -> tuple:
         X1 = CENTER_X - (THICKNESS / 2)
-        Y1 = CENTER_Y + (GAP / 2)
+        Y1 = floor(CENTER_Y + (GAP / 2))
         X2 = CENTER_X + (THICKNESS / 2)
-        Y2 = ceil(CENTER_Y + (SIZE + (GAP / 2)))
+        Y2 = floor(CENTER_Y + (SIZE + (GAP / 2)))
         bottom = tuple([X1, Y1, X2, Y2])
         print(f' bottom: {bottom}')
         return bottom
