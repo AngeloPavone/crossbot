@@ -115,41 +115,13 @@ class Crosshair:
                 f'cl_crosshair_dynamic_splitalpha_outermod {self.outer_split_alpha};\n'
                 f'cl_crosshair_dynamic_maxdist_splitratio {self.split_size_ratio};\n'
                 )
+        print(settings)
         return settings
 
 
-    def print_crosshair(self) -> None:
-        print(f'\n CODE: \n {SHARE_CODE}\n')
-
-        print(f' OUTPUT: ')
-        print(
-                f' cl_crosshairstyle {self.style};\n'
-                f' cl_crosshairsize {self.size};\n'
-                f' cl_crosshairthickness {self.thickness};\n'
-                f' cl_crosshairgap {self.gap};\n'
-                f' cl_crosshair_drawoutline {self.has_outline};\n'
-                f' cl_crosshair_outlinethickness {self.outline_thickness};\n'
-                f' cl_crosshaircolor {self.color};\n'
-                f' cl_crosshaircolor_r {self.red};\n'
-                f' cl_crosshaircolor_g {self.green};\n'
-                f' cl_crosshaircolor_b {self.blue};\n'
-                f' cl_crosshairusealpha {self.has_alpha};\n'
-                f' cl_crosshairalpha {self.alpha};\n'
-                f' cl_crosshairdot {self.has_center_dot};\n'
-                f' cl_crosshair_t {self.is_t_style};\n'
-                f' cl_crosshairgap_useweaponvalue {self.use_weapon_gap};\n'
-                f' cl_crosshair_dynamic_splitdist {self.split_distance};\n'
-                f' cl_fixedcrosshairgap {self.fixed_gap};\n'
-                f' cl_crosshair_dynamic_splitalpha_innermod {self.inner_split_alpha};\n'
-                f' cl_crosshair_dynamic_splitalpha_outermod {self.outer_split_alpha};\n'
-                f' cl_crosshair_dynamic_maxdist_splitratio {self.split_size_ratio};\n'
-        )
-
-
-def create_image() -> object:
+def create_image(c) -> object:
     img = Image.new('RGBA', (WIDTH, HEIGHT), (255, 0, 0, 0))
     draw = ImageDraw.Draw(img)
-    c = Crosshair()
 
 
     def map_gap_value(x: float) -> float:
@@ -199,14 +171,14 @@ def create_image() -> object:
     OUTLINE = 1 if c.has_outline else 0
 
 
-    # print(f' resolution: ({WIDTH}, {HEIGHT})')
+    print(f' resolution: ({WIDTH}, {HEIGHT})')
     def left() -> tuple:
         X1 = CENTER_X - (SIZE + (GAP / 2))
         Y1 = CENTER_Y + (THICKNESS / 2)
         X2 = CENTER_X - (GAP / 2)
         Y2 = CENTER_Y - (THICKNESS / 2)
         left = tuple([X1, Y1, X2, Y2])
-        # print(f' left: {left}')
+        print(f' left: {left}')
         return left
 
 
@@ -216,27 +188,27 @@ def create_image() -> object:
         X2 = CENTER_X + (THICKNESS / 2)
         Y2 = CENTER_Y - (GAP / 2)
         top = tuple([X1, Y1, X2, Y2])
-        # print(f' top: {top}')
+        print(f' top: {top}')
         return top
 
 
     def right() -> tuple:
         X1 = CENTER_X + (GAP / 2)
         Y1 = CENTER_Y + (THICKNESS / 2)
-        X2 = CENTER_X + (SIZE + (GAP / 2))
+        X2 = ceil(CENTER_X + (SIZE + (GAP / 2)))
         Y2 = CENTER_Y - (THICKNESS / 2)
         right = tuple([X1, Y1, X2, Y2])
-        # print(f' right: {right}')
+        print(f' right: {right}')
         return right
 
 
     def bottom() -> tuple:
         X1 = CENTER_X - (THICKNESS / 2)
-        Y1 = CENTER_Y + (GAP / 2) + 1
+        Y1 = CENTER_Y + (GAP / 2)
         X2 = CENTER_X + (THICKNESS / 2)
-        Y2 = CENTER_Y + (SIZE + (GAP / 2))
+        Y2 = ceil(CENTER_Y + (SIZE + (GAP / 2)))
         bottom = tuple([X1, Y1, X2, Y2])
-        # print(f' bottom: {bottom}')
+        print(f' bottom: {bottom}')
         return bottom
 
 
@@ -246,9 +218,8 @@ def create_image() -> object:
         X2 = CENTER_X + (THICKNESS / 2)
         Y2 = CENTER_Y + (THICKNESS / 2)
         dot = tuple([X1, Y1, X2, Y2])
-        # print(f' dot: {dot}')
+        print(f' dot: {dot}')
         return dot
-
 
     draw.rectangle((left()), fill=(c.red, c.green, c.blue, c.alpha), outline="black", width=OUTLINE)
     draw.rectangle((top()), fill=(c.red, c.green, c.blue, c.alpha), outline="black", width=OUTLINE)
@@ -263,8 +234,7 @@ def create_image() -> object:
 
 def main():
     c = Crosshair()
-    c.print_crosshair()
-    create_image()
+    create_image(c)
 
 
 if __name__ == '__main__':

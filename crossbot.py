@@ -26,7 +26,7 @@ async def on_message(message):
     if message.content.startswith('CSGO'):
         generate.SHARE_CODE = str(message.content)
         c = generate.Crosshair()
-        generate.create_image()
+        generate.create_image(c)
         with open('crosshair.png', 'rb') as f:
             img = discord.File(f)
         await message.channel.send(file=img)
