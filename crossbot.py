@@ -16,13 +16,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = MyClient(intents=intents)
 
-
-@bot.event
-async def on_message(message):
-    if message.channel.name == "bot-commands" or message.channel.name == "business":
-        if message.author == bot.user:
-            return
-
+async def send_crosshair(message) -> None:
         MATCH = re.search("^CSGO(-?[\\w]{5}){5}$", message.content)
 
         if MATCH:
@@ -34,6 +28,14 @@ async def on_message(message):
             await message.channel.send(file=img)
         else:
             await message.delete()
+
+
+@bot.event
+async def on_message(message):
+    if message.channel.name == "bot-commands" or message.channel.name == "business":
+        if message.author == bot.user:
+            return
+        await send_crosshair(message)
     else:
         return
 

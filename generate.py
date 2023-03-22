@@ -177,7 +177,6 @@ def create_image(c) -> object:
         X2 = ceil(CENTER_X - (GAP / 2))
         Y2 = CENTER_Y - (THICKNESS / 2)
         left = tuple([X1, Y1, X2, Y2])
-        print(f' left: {left}')
         return left
 
 
@@ -187,7 +186,6 @@ def create_image(c) -> object:
         X2 = CENTER_X + (THICKNESS / 2)
         Y2 = ceil(CENTER_Y - (GAP / 2))
         top = tuple([X1, Y1, X2, Y2])
-        print(f' top: {top}')
         return top
 
 
@@ -197,7 +195,6 @@ def create_image(c) -> object:
         X2 = floor(CENTER_X + (SIZE + (GAP / 2)))
         Y2 = CENTER_Y - (THICKNESS / 2)
         right = tuple([X1, Y1, X2, Y2])
-        print(f' right: {right}')
         return right
 
 
@@ -207,7 +204,6 @@ def create_image(c) -> object:
         X2 = CENTER_X + (THICKNESS / 2)
         Y2 = floor(CENTER_Y + (SIZE + (GAP / 2)))
         bottom = tuple([X1, Y1, X2, Y2])
-        print(f' bottom: {bottom}')
         return bottom
 
 
@@ -217,7 +213,6 @@ def create_image(c) -> object:
         X2 = CENTER_X + (THICKNESS / 2)
         Y2 = CENTER_Y + (THICKNESS / 2)
         dot = tuple([X1, Y1, X2, Y2])
-        print(f' dot: {dot}')
         return dot
 
     draw.rectangle((left()), fill=(c.red, c.green, c.blue, c.alpha), outline="black", width=OUTLINE)
