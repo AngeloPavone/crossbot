@@ -93,7 +93,6 @@ class Crosshair:
 
     def get_crosshair_settings(self) -> str:
         settings = str(
-                f'**SETTINGS**\n'
                 f'cl_crosshairstyle {self.style};\n'
                 f'cl_crosshairsize {self.size};\n'
                 f'cl_crosshairthickness {self.thickness};\n'

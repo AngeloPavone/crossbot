@@ -1,5 +1,6 @@
 import os
 import generate
+import regex as re
 
 import discord
 from discord.ext import commands
@@ -20,17 +21,23 @@ bot = MyClient(intents=intents)
 
 @bot.event
 async def on_message(message):
-    if message.author == bot.user:
-        return
+    if message.channel.name == "bot-commands" or message.channel.name == "business":
+        if message.author == bot.user:
+            return
 
-    if message.content.startswith('CSGO'):
-        generate.SHARE_CODE = str(message.content)
-        c = generate.Crosshair()
-        generate.create_image(c)
-        with open('crosshair.png', 'rb') as f:
-            img = discord.File(f)
-        await message.channel.send(file=img)
-        await message.channel.send(c.get_crosshair_settings())
+        MATCH = re.search("^CSGO(-?[\\w]{5}){5}$", message.content)
+
+        if MATCH:
+            generate.SHARE_CODE = str(message.content)
+            c = generate.Crosshair()
+            generate.create_image(c)
+            with open('crosshair.png', 'rb') as f:
+                img = discord.File(f)
+            await message.channel.send(file=img)
+        else:
+            await message.delete()
+    else:
+        return
 
 
 bot.run(TOKEN)
