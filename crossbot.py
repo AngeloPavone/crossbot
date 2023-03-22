@@ -1,9 +1,7 @@
-import os
 import generate
 import regex as re
 
 import discord
-from discord.ext import commands
 
 
 with open('token', 'r') as f:

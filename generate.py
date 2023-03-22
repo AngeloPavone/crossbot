@@ -1,7 +1,5 @@
 from math import ceil, log, floor
-from os import walk
 import re
-from sys import argv
 
 from PIL import Image, ImageDraw
 import numpy as np
