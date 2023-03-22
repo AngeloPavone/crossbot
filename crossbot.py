@@ -16,6 +16,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = MyClient(intents=intents)
 
+
 async def send_crosshair(message) -> None:
         MATCH = re.search("^CSGO(-?[\\w]{5}){5}$", message.content)
 
