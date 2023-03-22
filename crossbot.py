@@ -33,12 +33,13 @@ async def send_crosshair(message) -> None:
 
 @bot.event
 async def on_message(message):
-    if message.channel.name == "bot-commands" or message.channel.name == "business":
         if message.author == bot.user:
             return
-        await send_crosshair(message)
-    else:
-        return
+
+        if message.channel.name == "bot-commands" or message.channel.name == "business":
+            await send_crosshair(message)
+        else:
+            return
 
 
 bot.run(TOKEN)
