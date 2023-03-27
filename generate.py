@@ -115,63 +115,8 @@ class Crosshair:
         print(settings)
         return settings
 
-
-def create_image(c) -> object:
-    img = Image.new('RGBA', (WIDTH, HEIGHT), (255, 0, 0, 0))
-    draw = ImageDraw.Draw(img)
-
-
-    def map_gap_value(x: float) -> float:
-        if x > -5:
-            return x -(-5)
-        elif x < -5:
-            return (x + 5) * -1
-        else:
-            return 0
-
-
-    def round_up_to_odd(f):
-        f = int(np.ceil(f))
-        return f + 1 if f % 2 == 0 else f
-
-
-    def default_colors() -> None:
-        if c.color == 1:
-            c.blue = 0
-            c.red = 0
-            c.green = 255
-        if c.color == 2:
-            c.blue = 0
-            c.red = 255
-            c.green = 255
-        if c.color == 3:
-            c.blue = 255
-            c.red = 0
-            c.green = 0
-        if c.color == 4:
-            c.blue = 255
-            c.red = 0
-            c.green = 255
-
-
-    default_colors()
-
-
-    if c.thickness < 1:
-        c.thickness = 1
-
-
-    SIZE = 2 * c.size
-    THICKNESS = round(2 * c.thickness) // 2
-    GAP = 2 * map_gap_value(c.gap)
-    GAP = round_up_to_odd(GAP)
-    SIZE = round_up_to_odd(SIZE)
-    THICKNESS = floor(round_up_to_odd(THICKNESS))
-    OUTLINE = 1 if c.has_outline else 0
-
-
-    print(f' resolution: ({WIDTH}, {HEIGHT})')
-    def left() -> tuple:
+class generate_crosshair_coordinates:
+    def left(self, THICKNESS: float, SIZE: float, GAP: float) -> tuple:
         X1 = ceil(CENTER_X - (SIZE + (GAP / 2)))
         Y1 = CENTER_Y + (THICKNESS / 2)
         X2 = ceil(CENTER_X - (GAP / 2))
@@ -180,7 +125,7 @@ def create_image(c) -> object:
         return left
 
 
-    def top() -> tuple:
+    def top(self, THICKNESS: float, SIZE: float, GAP: float) -> tuple:
         X1 = CENTER_X - (THICKNESS / 2)
         Y1 = ceil(CENTER_Y - (SIZE + (GAP / 2)))
         X2 = CENTER_X + (THICKNESS / 2)
@@ -189,7 +134,7 @@ def create_image(c) -> object:
         return top
 
 
-    def right() -> tuple:
+    def right(self, THICKNESS: float, SIZE: float, GAP: float) -> tuple:
         X1 = floor(CENTER_X + (GAP / 2))
         Y1 = CENTER_Y + (THICKNESS / 2)
         X2 = floor(CENTER_X + (SIZE + (GAP / 2)))
@@ -198,7 +143,7 @@ def create_image(c) -> object:
         return right
 
 
-    def bottom() -> tuple:
+    def bottom(self, THICKNESS: float, SIZE: float, GAP: float) -> tuple:
         X1 = CENTER_X - (THICKNESS / 2)
         Y1 = floor(CENTER_Y + (GAP / 2))
         X2 = CENTER_X + (THICKNESS / 2)
@@ -207,7 +152,7 @@ def create_image(c) -> object:
         return bottom
 
 
-    def dot() -> tuple:
+    def dot(self, THICKNESS: float) -> tuple:
         X1 = CENTER_X - (THICKNESS / 2)
         Y1 = CENTER_Y - (THICKNESS / 2)
         X2 = CENTER_X + (THICKNESS / 2)
@@ -215,12 +160,113 @@ def create_image(c) -> object:
         dot = tuple([X1, Y1, X2, Y2])
         return dot
 
-    draw.rectangle((left()), fill=(c.red, c.green, c.blue, c.alpha), outline="black", width=OUTLINE)
-    draw.rectangle((top()), fill=(c.red, c.green, c.blue, c.alpha), outline="black", width=OUTLINE)
-    draw.rectangle((right()), fill=(c.red, c.green, c.blue, c.alpha), outline="black", width=OUTLINE)
-    draw.rectangle((bottom()), fill=(c.red, c.green, c.blue, c.alpha), outline="black", width=OUTLINE)
-    draw.rectangle((dot()), fill=(c.red, c.green, c.blue, c.alpha), outline="black", width=OUTLINE) if c.has_center_dot else None
+    def left_outline(self, THICKNESS: float, SIZE: float, GAP: float) -> tuple:
+        X1 = ceil(CENTER_X - (SIZE + (GAP / 2))) - 1
+        Y1 = CENTER_Y + (THICKNESS / 2) + 1
+        X2 = ceil(CENTER_X - (GAP / 2)) + 1
+        Y2 = CENTER_Y - (THICKNESS / 2) - 1
+        left = tuple([X1, Y1, X2, Y2])
+        return left
 
+
+    def top_outline(self, THICKNESS: float, SIZE: float, GAP: float) -> tuple:
+        X1 = CENTER_X - (THICKNESS / 2) - 1
+        Y1 = ceil(CENTER_Y - (SIZE + (GAP / 2))) - 1
+        X2 = CENTER_X + (THICKNESS / 2) + 1
+        Y2 = ceil(CENTER_Y - (GAP / 2)) + 1
+        top = tuple([X1, Y1, X2, Y2])
+        return top
+
+
+    def right_outline(self, THICKNESS: float, SIZE: float, GAP: float) -> tuple:
+        X1 = floor(CENTER_X + (GAP / 2)) - 1
+        Y1 = CENTER_Y + (THICKNESS / 2) + 1
+        X2 = floor(CENTER_X + (SIZE + (GAP / 2))) + 1
+        Y2 = CENTER_Y - (THICKNESS / 2) - 1
+        right = tuple([X1, Y1, X2, Y2])
+        return right
+
+
+    def bottom_outline(self, THICKNESS: float, SIZE: float, GAP: float) -> tuple:
+        X1 = CENTER_X - (THICKNESS / 2) - 1
+        Y1 = floor(CENTER_Y + (GAP / 2)) - 1
+        X2 = CENTER_X + (THICKNESS / 2) + 1
+        Y2 = floor(CENTER_Y + (SIZE + (GAP / 2))) + 1
+        bottom = tuple([X1, Y1, X2, Y2])
+        return bottom
+
+
+    def dot_outline(self, THICKNESS: float) -> tuple:
+        X1 = CENTER_X - (THICKNESS / 2) - 1
+        Y1 = CENTER_Y - (THICKNESS / 2) - 1
+        X2 = CENTER_X + (THICKNESS / 2) + 1
+        Y2 = CENTER_Y + (THICKNESS / 2) + 1
+        dot = tuple([X1, Y1, X2, Y2])
+        return dot
+
+def map_gap_value(x: int | float) -> float:
+    if x > -5:
+        return float(x -(-5))
+    elif x < -5:
+        return float((x + 5) * -1)
+    else:
+        return float(0)
+
+
+def round_up_to_odd(f: int | float) -> float:
+    f = int(np.ceil(f))
+    return float(f + 1 if f % 2 == 0 else f)
+
+
+def default_colors(c: Crosshair) -> None:
+    if c.color == 1:
+        c.blue = 0
+        c.red = 0
+        c.green = 255
+    if c.color == 2:
+        c.blue = 0
+        c.red = 255
+        c.green = 255
+    if c.color == 3:
+        c.blue = 255
+        c.red = 0
+        c.green = 0
+    if c.color == 4:
+        c.blue = 255
+        c.red = 0
+        c.green = 255
+
+
+def create_image(c: Crosshair) -> object:
+    img = Image.new('RGBA', (WIDTH, HEIGHT), (255, 0, 0, 0))
+    draw = ImageDraw.Draw(img)
+    g = generate_crosshair_coordinates()
+
+    if c.color != 5:
+        default_colors(c)
+
+    if c.thickness < 1:
+        c.thickness = 1
+
+    SIZE = 2 * c.size
+    THICKNESS = round(2 * c.thickness) // 2
+    GAP = 2 * map_gap_value(c.gap)
+    GAP = round_up_to_odd(GAP)
+    SIZE = round_up_to_odd(SIZE)
+    THICKNESS = floor(round_up_to_odd(THICKNESS))
+
+    if c.has_outline:
+        draw.rectangle((g.left_outline(THICKNESS, SIZE, GAP)), fill=('black'))
+        draw.rectangle((g.top_outline(THICKNESS, SIZE, GAP)), fill=('black'))
+        draw.rectangle((g.right_outline(THICKNESS, SIZE, GAP)), fill=('black'))
+        draw.rectangle((g.bottom_outline(THICKNESS, SIZE, GAP)), fill=('black'))
+        draw.rectangle((g.dot_outline(THICKNESS)), fill=('black')) if c.has_center_dot else None
+
+    draw.rectangle((g.left(THICKNESS, SIZE, GAP)), fill=(c.red, c.green, c.blue, c.alpha))
+    draw.rectangle((g.top(THICKNESS, SIZE, GAP)), fill=(c.red, c.green, c.blue, c.alpha))
+    draw.rectangle((g.right(THICKNESS, SIZE, GAP)), fill=(c.red, c.green, c.blue, c.alpha))
+    draw.rectangle((g.bottom(THICKNESS, SIZE, GAP)), fill=(c.red, c.green, c.blue, c.alpha))
+    draw.rectangle((g.dot(THICKNESS)), fill=(c.red, c.green, c.blue, c.alpha)) if c.has_center_dot else None
 
     img.save('crosshair.png', 'PNG')
     return img
