@@ -10,6 +10,8 @@ with open('token', 'r') as f:
 
 class MyClient(discord.Client):
     async def on_ready(self):
+        activity = discord.Game(name="post crosshairs in the #business channel")
+        await bot.change_presence(activity=activity)
         print('Logged on as', self.user)
 
 intents = discord.Intents.default()
@@ -36,7 +38,7 @@ async def on_message(message):
         if message.author == bot.user:
             return
 
-        if message.channel.name == "bot-commands" or message.channel.name == "business":
+        if message.channel.name == "business":
             await send_crosshair(message)
         else:
             return
