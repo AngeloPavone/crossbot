@@ -208,7 +208,7 @@ def map_gap_value(x: int | float) -> float:
     if x > -5:
         return float(x -(-5))
     elif x < -5:
-        return float((x + 5) * -1)
+        return float((x + 5) * -1) -5
     else:
         return float(0)
 
@@ -255,15 +255,16 @@ def create_image(c: Crosshair) -> object:
     SIZE = round_up_to_odd(SIZE)
     THICKNESS = floor(round_up_to_odd(THICKNESS))
 
+
     if c.has_outline:
         draw.rectangle((g.left_outline(THICKNESS, SIZE, GAP)), fill=('black'))
-        draw.rectangle((g.top_outline(THICKNESS, SIZE, GAP)), fill=('black'))
+        draw.rectangle((g.top_outline(THICKNESS, SIZE, GAP)), fill=('black')) if not c.is_t_style else None
         draw.rectangle((g.right_outline(THICKNESS, SIZE, GAP)), fill=('black'))
         draw.rectangle((g.bottom_outline(THICKNESS, SIZE, GAP)), fill=('black'))
         draw.rectangle((g.dot_outline(THICKNESS)), fill=('black')) if c.has_center_dot else None
 
     draw.rectangle((g.left(THICKNESS, SIZE, GAP)), fill=(c.red, c.green, c.blue, c.alpha))
-    draw.rectangle((g.top(THICKNESS, SIZE, GAP)), fill=(c.red, c.green, c.blue, c.alpha))
+    draw.rectangle((g.top(THICKNESS, SIZE, GAP)), fill=(c.red, c.green, c.blue, c.alpha)) if not c.is_t_style else None
     draw.rectangle((g.right(THICKNESS, SIZE, GAP)), fill=(c.red, c.green, c.blue, c.alpha))
     draw.rectangle((g.bottom(THICKNESS, SIZE, GAP)), fill=(c.red, c.green, c.blue, c.alpha))
     draw.rectangle((g.dot(THICKNESS)), fill=(c.red, c.green, c.blue, c.alpha)) if c.has_center_dot else None
