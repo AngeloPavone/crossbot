@@ -269,6 +269,7 @@ def create_image(c: Crosshair) -> object:
     draw.rectangle((g.bottom(THICKNESS, SIZE, GAP)), fill=(c.red, c.green, c.blue, c.alpha))
     draw.rectangle((g.dot(THICKNESS)), fill=(c.red, c.green, c.blue, c.alpha)) if c.has_center_dot else None
 
+
     img.save('crosshair.png', 'PNG')
     return img
 
