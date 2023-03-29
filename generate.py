@@ -245,11 +245,11 @@ def create_image(c: Crosshair) -> object:
     if c.color != 5:
         default_colors(c)
 
-    if c.thickness < 1:
-        c.thickness = 1
 
     SIZE = 2 * c.size
     THICKNESS = round(2 * c.thickness) // 2
+    # if THICKNESS < 1:
+    #     THICKNESS = 1
     GAP = 2 * map_gap_value(c.gap)
     GAP = round_up_to_odd(GAP)
     SIZE = round_up_to_odd(SIZE)
